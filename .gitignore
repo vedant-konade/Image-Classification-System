@@ -1,0 +1,10 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+reports/heatmaps/
+data/
+*.pdf
+*.png
+*.jpg
+.env

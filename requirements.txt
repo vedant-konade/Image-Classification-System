@@ -1,0 +1,9 @@
+torch
+torchvision
+torchaudio
+numpy
+matplotlib
+scikit-learn
+tqdm
+streamlit   # only if you do the bonus UI
+Pillow
