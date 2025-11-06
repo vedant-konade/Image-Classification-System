@@ -67,12 +67,12 @@ Evaluate using:
 
 python -m src.evaluate
 
-6. Project Structure
-imgclf/
-├─ src/
-│  ├─ train.py  
-│  ├─ evaluate.py  
-│  ├─ predict.py  
+6. Project Structure  
+imgclf/  
+├─ src/  
+│  ├─ train.py    
+│  ├─ evaluate.py    
+│  ├─ predict.py    
 │  └─ utils.py  
 ├─ models/  
 │  └─ cnn.py  
@@ -87,4 +87,5 @@ imgclf/
 7. Notes
 
 The project is modular, easy to modify, and can be extended with transfer learning if required.
+
 
