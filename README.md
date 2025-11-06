@@ -70,18 +70,21 @@ python -m src.evaluate
 6. Project Structure
 imgclf/
 ├─ src/
-│  ├─ train.py
-│  ├─ evaluate.py
-│  ├─ predict.py
-│  └─ utils.py
-├─ models/
-│  └─ cnn.py
-├─ app/
-│  └─ streamlit_app.py
-├─ outputs/
-│  └─ model + plots
-└─ requirements.txt
+│  ├─ train.py  
+│  ├─ evaluate.py  
+│  ├─ predict.py  
+│  └─ utils.py  
+├─ models/  
+│  └─ cnn.py  
+├─ app/  
+│  └─ streamlit_app.py  
+├─ outputs/  
+│  └─ model + plots  
+└─ requirements.txt  
 
+
+  
 7. Notes
 
 The project is modular, easy to modify, and can be extended with transfer learning if required.
+
