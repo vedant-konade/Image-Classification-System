@@ -1,6 +1,8 @@
+import os
 import torch
 from torch.utils.data import random_split, DataLoader
 from torchvision import datasets, transforms
+from torchvision.datasets.utils import download_url
 
 def get_transforms():
     train_tfms = transforms.Compose([
@@ -8,16 +10,28 @@ def get_transforms():
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.4914,0.4822,0.4465],
-                             std=[0.2470,0.2435,0.2616]),
+                            std=[0.2470,0.2435,0.2616]),
     ])
     test_tfms = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.4914,0.4822,0.4465],
-                             std=[0.2470,0.2435,0.2616]),
+                            std=[0.2470,0.2435,0.2616]),
     ])
     return train_tfms, test_tfms
 
+
+CIFAR_MIRROR = "https://www.cs.toronto.edu/~kriz/"
+
+def download_cifar10_fast(data_dir):
+    base = "cifar-10-python.tar.gz"
+    path = os.path.join(data_dir, base)
+    if not os.path.exists(path):
+        print("🔽 Downloading CIFAR-10 from fast mirror...")
+        download_url(CIFAR_MIRROR + base, data_dir)
+
 def get_loaders(data_dir="data", batch_size=128, seed=42):
+    # try fast mirror first (speeds up download in some regions)
+    download_cifar10_fast(data_dir)
     g = torch.Generator().manual_seed(seed)
     train_tfms, test_tfms = get_transforms()
 

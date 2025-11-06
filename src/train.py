@@ -17,7 +17,14 @@ def train_model(epochs=30, lr=1e-3, patience=5, out_dir="outputs"):
 
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=lr)
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2, verbose=True)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer, mode='min', factor=0.5, patience=2
+    )
+
+    def on_plateau(val_loss):
+        print(f" LR scheduler triggered — val_loss: {val_loss:.4f}")
+
+
 
     best_val_loss = float('inf')
     best_path = os.path.join(out_dir, "best_model.pt")
@@ -65,9 +72,14 @@ def train_model(epochs=30, lr=1e-3, patience=5, out_dir="outputs"):
         tr_accs.append(tr_acc);    val_accs.append(val_acc)
 
         print(f"Epoch {epoch}: train_loss={tr_loss:.4f} val_loss={val_loss:.4f} "
-              f"train_acc={tr_acc:.4f} val_acc={val_acc:.4f}")
+                f"train_acc={tr_acc:.4f} val_acc={val_acc:.4f}")
 
+        prev_lr = optimizer.param_groups[0]['lr']
         scheduler.step(val_loss)
+        new_lr = optimizer.param_groups[0]['lr']
+        if new_lr != prev_lr:
+            print(f" Learning rate reduced: {prev_lr:.6f} → {new_lr:.6f}")
+
 
         # Early stopping
         if val_loss < best_val_loss - 1e-4:
@@ -98,4 +110,6 @@ def train_model(epochs=30, lr=1e-3, patience=5, out_dir="outputs"):
     print(f"Best model saved to: {best_path}")
 
 if __name__ == "__main__":
+    # Explicit startup message to confirm the module ran
+    print("Starting training (src.train)...", flush=True)
     train_model()
